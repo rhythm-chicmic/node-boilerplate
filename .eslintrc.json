@@ -1,0 +1,28 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb-base"
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "linebreak-style": [
+        "error",
+        "windows"
+    ],
+    "rules": {
+        "strict": 0,
+        "global-require": 0,
+        "max-len": ["error", { "code": 125 }],
+        "no-underscore-dangle": 0,
+        "no-param-reassign": 0,
+        "no-return-await": 0,
+        "no-plusplus": 0,
+        "new-cap": 0,
+        "no-await-in-loop": 0
+    }
+}
