@@ -142,7 +142,8 @@ let getMulterMiddleware = (formData) => {
 * middleware
 * @param {*} handler
 */
-let getHandlerMethod = (route) => {
+let getHandlerMethod = 
+(route) => {
     const { handler } = route;
     return (request, response) => {
         let payload = {
@@ -208,7 +209,7 @@ let createSwaggerUIForRoutes = (app, routes = []) => {
     const swaggerDocument = require('../../swagger.json');
     const swaggerAuthUsers = {};
     const swaggerOptions = {
-        customSiteTitle: 'HZM Metaverse API Documentations',
+        customSiteTitle: 'API Documentations',
         // customfavIcon: "/assets/favicon.ico"
     };
     swaggerAuthUsers[CONFIG.SWAGGER_AUTH.USERNAME] = CONFIG.SWAGGER_AUTH.PASSWORD;

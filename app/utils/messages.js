@@ -38,6 +38,7 @@ module.exports = {
     OTP_INVALID: 'Your otp is invalid.',
     INVALID_ETHEREUM_ADDRESS: 'publicAddress must be a valid ethereum addresses.',
     FORGOT_PASSWORD_EMAIL_SENT_SUCCESSFULLY: 'Forget password email sent successfully',
+    PROJECT_NOT_FOUND: 'Project not found',
     SOCKET: {
         USER_CONNECTED_SUCCESSFULLY: 'Users Connected successfully',
         USER_DISCONNECT: 'User disconnected',
@@ -45,4 +46,13 @@ module.exports = {
         MESSAGE_SENT: 'Message sent successfully',
         MESSAGE_READ: 'Message read updated Successfully',
     },
+    SHORT_URL : {
+        SHORT_URL_ALREADY_EXISTS: 'Short URL Already Exists',
+        SHORT_URL_NOT_FOUND: 'Short Url not found'
+    },
+    AUTH : {
+        UNIQUE_CREDENTIALS_REQUIRED: 'Unique Credentials Required',
+        TOKEN_EXPIRED: 'Token Expired',
+        CREDENTIALS_NOT_MATCHED: 'Creadentials not matched'
+    }
 };

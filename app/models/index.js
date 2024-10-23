@@ -9,4 +9,7 @@ module.exports = {
   userModel: require('./userModel'),
   dbVersionModel: require('./dbVersionModel'),
   adminModel: require('./adminModel'),
+  projectModel: require('./projectModel'),
+  shortUrlModel: require('./shortUrlModel'),
+  authModel: require('./authModel')
 };

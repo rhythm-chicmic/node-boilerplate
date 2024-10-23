@@ -8,7 +8,16 @@ const socketConnection = {};
 socketConnection.connect = (io) => {
   io.use(authService.socketAuthentication);
   io.on('connection', async (socket) => {
+
     console.log('connection established: ', socket.id);
+    io.emit('connection', socket.id);
+
+    console.log(global.io.sockets.adapter.sids);
+
+    socket.on("chat message", (msg) => {
+      io.emit("chat message",msg);
+    })
+
 
     socket.use(async (packet, next) => {
       console.log('Socket hit:=>', packet);
@@ -19,6 +28,8 @@ socketConnection.connect = (io) => {
         packet[2]({ success: false, message: error.message });
       }
     });
+
+
 
     socket.on(SOCKET_EVENTS.TEST, (payload, callback) => {
       callback({ success: true, message: MESSAGES.SOCKET.SOCKET_IS_RUNNING_FINE });

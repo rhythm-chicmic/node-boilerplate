@@ -10,4 +10,7 @@ module.exports = {
     authService: require('./authService'),
     fileUploadService: require('./fileUploadService'),
     stripeService: require('./stripeService'),
+    projectService: require('./projectService'),
+    shortUrlService: require('./shortUrlService.js'),
+    auth1Service : require('./auth1Service.js')
 };

@@ -73,6 +73,24 @@ joiUtils.Joi = Joi.extend((Joi) => ({
 }));
 
 joiUtils.Joi = joiUtils.Joi.extend((Joi) => ({
+  type: 'number',
+  base: Joi.number(),
+  messages: {
+    'number.modeValue': "Mode must be 1 or 2"
+  },
+  rules: {
+    modeValid: {
+      validate(value, helpers) {
+        if(value > 2 || value <= 0){
+          return helpers.error('number.modeValue');
+        }
+        return value;
+      }
+    },
+  },
+}));
+
+joiUtils.Joi = joiUtils.Joi.extend((Joi) => ({
   type: 'date',
   base: Joi.date(),
   messages: {

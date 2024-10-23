@@ -2,10 +2,10 @@
 
 const { API_AUTH_KEY } = require('../../config');
 const CONFIG = require('../../config');
-const { decryptJwt } = require('../utils/utils');
+const { decryptJwt, convertIdToMongooseId } = require('../utils/utils');
 const { createErrorResponse } = require('../helpers');
 const dbService = require('./dbService');
-const { conversationRoomModel, sessionModel, userModel } = require('../models');
+const { conversationRoomModel, sessionModel, userModel, authModel } = require('../models');
 const {
     MESSAGES, ERROR_TYPES, NORMAL_PROJECTION, TOKEN_TYPES
 } = require('../utils/constants');
@@ -46,9 +46,8 @@ const validateUser = async (request, authType) => {
                 return false;
             }
 
-            if (session.role === CONSTANTS.USER_ROLES.USER) {
-                user = await userModel.findOne({ _id: session.userId }).lean();
-            }
+            user = await userModel.findOne({ _id: session.userId }).lean();
+           
 
             if (user) {
                 user.session = session;
@@ -95,27 +94,28 @@ authService.userValidate = (authType) => {
  */
 authService.socketAuthentication = async (socket, next) => {
     try {
+        
         const session = await decryptJwt(socket.handshake.query.authorization);
         if (!session) {
             return next({ success: false, message: MESSAGES.UNAUTHORIZED });
         }
 
-        const user = await dbService.findOne(userModel, { _id: session.userId }, NORMAL_PROJECTION);
-        if (!user) {
+        const user = await dbService.findOne(authModel, { _id: convertIdToMongooseId(session) }, NORMAL_PROJECTION);
+            if (!user) {
             return next({ success: false, message: MESSAGES.UNAUTHORIZED });
         }
-        const userId = session.userId.toString();
+        const userId = session.toString();
         socket.join(userId); // -- user to join room
         socket.userId = userId;
 
-        const groupData = await dbService.find(conversationRoomModel, { 'members.userId': { $eq: socket.userId } });
-        if (!groupData) {
-            return ({ success: false, message: MESSAGES.NOT_FOUND });
-        }
+        // const groupData = await dbService.find(conversationRoomModel, { 'members.userId': { $eq: socket.userId } });
+        // if (!groupData) {
+        //     return ({ success: false, message: MESSAGES.NOT_FOUND });
+        // }
 
-        for (let i = 0; i < groupData.length; i++) {
-            socket.join(groupData[i].uniqueCode);
-        }
+        // for (let i = 0; i < groupData.length; i++) {
+        //     socket.join(groupData[i].uniqueCode);
+        // }
 
         return next();
     } catch (err) {
